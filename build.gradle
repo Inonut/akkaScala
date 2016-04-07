@@ -1,0 +1,16 @@
+group 'akkaScala'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'scala'
+
+sourceCompatibility = 1.5
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.typesafe.akka:akka-osgi_2.11:2.4.3'
+    compile 'org.scalafx:scalafx_2.11:8.0.60-R9'
+    //compile 'com.typesafe.scala-logging:scala-logging_2.11:3.1.0'
+}
