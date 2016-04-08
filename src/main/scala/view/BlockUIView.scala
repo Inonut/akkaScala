@@ -1,10 +1,7 @@
-package listener
+package view
 
-import akka.util.Timeout
 import domain.BlockUIModel
 
-import scala.concurrent.duration._
-import scalafx.application.Platform
 import scalafx.geometry.Pos
 import scalafx.scene.Scene
 import scalafx.scene.control.ProgressIndicator
@@ -12,11 +9,11 @@ import scalafx.scene.layout.VBox
 import scalafx.stage.{Modality, Stage, StageStyle}
 
 /**
-  * Created by Dragos on 07.04.2016.
+  * Created by Dragos on 08.04.2016.
   */
-class BlockUIService extends Service{
+class BlockUIView {
 
-  private val model = new BlockUIModel()
+  val model = new BlockUIModel()
 
   private val stage = new Stage {
     resizable = false
@@ -42,11 +39,4 @@ class BlockUIService extends Service{
       case _ => stage.show()
     }
   })
-
-  override val customRecive: Receive = {
-    case OpenBlockUI => model.nrOfBlockUI.value = model.nrOfBlockUI.value + 1
-    case CloseBlockUI => model.nrOfBlockUI.value = model.nrOfBlockUI.value - 1
-  }
 }
-
-

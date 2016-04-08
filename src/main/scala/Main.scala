@@ -1,25 +1,47 @@
 import akka.actor.{ActorSystem, Props}
-import akka.routing.{Listen, RoundRobinPool}
-import akka.util.Timeout
-import listener.BlockUIService
-import model.Service
-import util.BlockUI
+import akka.routing.RoundRobinPool
+import com.typesafe.config.ConfigFactory
+import listener._
+import util.BusinessConstant
 
-import scala.concurrent.duration._
-import scalafx.application.{JFXApp, Platform}
-import scalafx.application.JFXApp.PrimaryStage
-import scalafx.scene.Scene
+import scalafx.application.JFXApp
 
 /**
   * Created by Dragos on 07.04.2016.
   */
 object Main extends JFXApp{
 
-  new Thread(new Runnable {
-    override def run(): Unit = BlockUI.show()
-  }).start()
+  val system = ActorSystem("mySystem", ConfigFactory.load)
+  val appService = system.actorOf(Props[GeneralService].withRouter(RoundRobinPool(BusinessConstant.defalutPool)))
 
 
+  appService ! OpenBlockUI
+
+  appService ! CloseBlockUI
+
+
+
+/*
+  val two: PartialFunction[Int, String] = { case 2 => "two" }
+
+  val three: PartialFunction[Int, String] = { case 3 => "three" }
+
+  val wildcard: PartialFunction[Int, String] = { case _ => "something else" }
+
+  val fct: PartialFunction[String, String] = { case _ => "then" }
+
+  def partial = two orElse three orElse wildcard andThen fct
+
+  println(partial(3))
+
+
+  def f(x: Int) = ""
+
+  def g(x: String) = "g(" + x + ")"
+
+  val fAndThenG = f _ andThen g _
+
+  println(fAndThenG(5))*/
 
   //BlockUI.close()
 
